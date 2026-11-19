@@ -3,23 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI trophy checklist</title>
+<title>Vice City Platinum Path — GTA VI Trophy Guide &amp; Tracker</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>GTA VI trophy checklist</h1>
-  <p id="progress">0 of 55 earned</p>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">VC</div>
+    <div class="brand-text">
+      <h1>Vice City Platinum Path</h1>
+      <p class="tagline">The offline guide &amp; tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5 — every official name, description and grade, a guide in our own words for each one, and the sources cited beside it.</p>
+    </div>
+  </div>
+  <div class="progress-box" aria-label="Your progress">
+    <div class="progress-numbers"><strong id="earned-count">0</strong> of 55 earned · <span id="earned-pct">0%</span></div>
+    <div class="bar"><div id="bar-fill"></div></div>
+    <div class="grade-chips" id="grade-chips"></div>
+    <p class="plat-note" id="plat-note"></p>
+  </div>
 </header>
-<div class="controls">
-  <label>Grade <select id="grade"><option value="all">All</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
-  <button id="export" type="button">Export progress</button>
-  <label class="import">Import progress <input id="import" type="file" accept="application/json"></label>
-</div>
-<table>
-  <thead><tr><th>Earned</th><th>Trophy</th><th>Grade</th><th>How to get it</th></tr></thead>
-  <tbody id="rows"></tbody>
-</table>
-<script type="module" src="app.js"></script>
+
+<nav class="views" aria-label="Views">
+  <button type="button" class="view-tab" data-view="checklist">Checklist &amp; Guides</button>
+  <button type="button" class="view-tab" data-view="roadmap">Roadmap to Platinum</button>
+  <button type="button" class="view-tab" data-view="missables">Missables <span class="warn-pill" id="missable-count"></span></button>
+</nav>
+
+<section class="controls" id="checklist-controls" aria-label="Filters">
+  <input id="search" type="search" placeholder="Search name, description or guide…" autocomplete="off">
+  <div class="chips" id="kind-chips" role="group" aria-label="Filter by kind">
+    <button type="button" class="chip" data-kind="all">All kinds</button>
+    <button type="button" class="chip" data-kind="story">Story</button>
+    <button type="button" class="chip" data-kind="missable">Missable</button>
+    <button type="button" class="chip" data-kind="collectibles">Collectibles</button>
+    <button type="button" class="chip" data-kind="activities">Activities</button>
+    <button type="button" class="chip" data-kind="online">Online</button>
+  </div>
+  <label class="ctl">Grade
+    <select id="grade-filter">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label class="ctl">Status
+    <select id="status-filter">
+      <option value="all">All</option>
+      <option value="earned">Earned</option>
+      <option value="open">Not earned</option>
+    </select>
+  </label>
+  <label class="ctl switch"><input type="checkbox" id="spoiler-toggle"> Spoiler shield — hide story trophies until earned</label>
+  <span class="spacer"></span>
+  <button type="button" id="export-btn">Export progress</button>
+  <label class="import-btn">Import progress<input id="import-file" type="file" accept="application/json" hidden></label>
+  <button type="button" id="reset-btn">Reset</button>
+</section>
+
+<main id="view-checklist" class="layout">
+  <section class="list-pane" aria-label="Trophy checklist">
+    <p id="result-count" class="result-count"></p>
+    <div id="trophy-list" class="trophy-list"></div>
+  </section>
+  <aside class="detail-pane" id="detail" aria-label="Trophy guide"></aside>
+</main>
+
+<main id="view-roadmap" class="single" hidden>
+  <div class="single-head">
+    <h2>Roadmap to the Platinum</h2>
+    <p>Six stages, built from the official descriptions: story first (with the missable windows flagged inside it), stranger strands next, the finale, then the Leonida completion grind. The order below is the order this guide recommends earning them in.</p>
+  </div>
+  <div id="roadmap"></div>
+</main>
+
+<main id="view-missables" class="single" hidden>
+  <div class="single-head">
+    <h2>Missable trophies — do not walk past these</h2>
+    <p>Five trophies whose official descriptions point at one-time story windows or fail-then-retry moments. Each card carries the full guide and its sources. Check this view before every chapter ends, and again before the final mission.</p>
+  </div>
+  <div id="missables"></div>
+</main>
+
+<footer>
+  <p>Fan-made and unofficial; not affiliated with Rockstar Games, Take-Two Interactive or Sony Interactive Entertainment. No game artwork is used — the look is this guide's own. Trophy names, descriptions, grades and hidden status are the official PlayStation 5 list for Grand Theft Auto VI, as published on PlayStation Network and listed by Exophase and PSNProfiles; every guide is written in this guide's own words and cites its sources beside the trophy. The official list contains no online trophies, so the Online filter is there for completeness. Progress is stored only in your browser (localStorage); export it to keep a backup. This app works fully offline and loads nothing from the network.</p>
+</footer>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -1,3 +1,7 @@
+// Entry: "Vice City Platinum Path" — an offline GTA VI trophy guide and tracker (guide and tracker app in app/,
+// its 55-trophy data file written for this entry, 4 screenshots). Branding line added for this entry; the hand-in
+// behaviour below is the kit's plumbing and stays as the starter had it.
+//
 // A working gta6-trophy-guide-01 entry (Node 22, standard library only): the guide is this directory's app/ folder,
 // plain static files a browser opens at app/index.html (ES modules, CSS, no build step), offline: it loads nothing
 // over the network, and its trophy list and guides are app/data/trophies.json. The program hands it in: it copies app/
@@ -14,13 +18,18 @@
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
+// This entry's own touch: name the guide in the hand-in log and report how many trophies its data file carries,
+// read from the app/ being handed in (a miscount here would mean the data file is not the one intended).
+const guideData = JSON.parse(readFileSync(join(here, 'app', 'data', 'trophies.json'), 'utf8'));
+console.log(`Vice City Platinum Path: handing in the guide for ${guideData.trophies.length} trophies.`);
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
